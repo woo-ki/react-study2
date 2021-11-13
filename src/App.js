@@ -2,17 +2,18 @@ import './App.css';
 import {useState} from 'react';
 import {Button, Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import data from './assets/data/data';
-import {Link, Route, Switch} from 'react-router-dom';
+import {Link, Route, Switch, useHistory} from 'react-router-dom';
 import Detail from './components/Detail';
 
 function App() {
+	const history = useHistory();
 	const [shoes, setShoes] = useState(data);
 
 	return (
 		<div className="App">
 			<Navbar bg="light" expand="lg">
 				<Container>
-					<Navbar.Brand href="#home">ReactStudy</Navbar.Brand>
+					<Navbar.Brand onClick={() => {history.push('/')}}>ReactStudy</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
@@ -44,26 +45,23 @@ function App() {
 							{
 								shoes.map((x, i) => {
 									return (
-										<Product product={x} key={i} />
+										<Product product={x} history={history} key={i} />
 									)
 								})
 							}
 						</div>
 					</div>
 				</Route>
-				<Route path={"/detail"} component={Detail} />
-				<Route path={"/:id"}>
-					<div>아무거나아무거나!</div>
-				</Route>
+				<Route path={"/detail/:id"} render={() => <Detail shoes={shoes} />} />
 			</Switch>
 
 		</div>
 	);
 }
 
-function Product(props) {
+	function Product(props) {
 	return (
-		<div className="col-md-4">
+		<div className="col-md-4" onClick={() => {props.history.push(`detail/${props.product.id}`)}}>
 			<img src={`https://codingapple1.github.io/shop/shoes${props.product.id + 1}.jpg`} width={"100%"}/>
 			<h4>{props.product.title}</h4>
 			<p>{props.product.content} &amp; {props.product.price}</p>
