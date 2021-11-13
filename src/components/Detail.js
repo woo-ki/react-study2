@@ -15,6 +15,9 @@ const Detail = (props) => {
 
 	const history = useHistory();
 	const {id} = useParams();
+	const product = props.shoes.find((x) => Number(x.id) === Number(id));
+
+
 
 	return (
 		<div className="container">
@@ -25,29 +28,19 @@ const Detail = (props) => {
 				<p>재고가 얼마 남지 않았습니다!</p>
 			</div>
 			<div className="row">
-				{
-					props.shoes.map((x) => {
-						if(x.id == id) {
-							return (
-								<>
-									<div className="col-md-6">
-										<img src={`https://codingapple1.github.io/shop/shoes${x.id + 1}.jpg`} width="100%"/>
-									</div>
-									<div className="col-md-6 mt-4">
-										<h4 className="pt-5">{x.title}</h4>
-										<p>{x.content}</p>
-										<p>{x.price}원</p>
-										<button className="btn btn-danger">주문하기</button>
-										<button className="btn btn-info" onClick={() => {
-											history.goBack();
-										}}>돌아가기
-										</button>
-									</div>
-								</>
-							)
-						}
-					})
-				}
+				<div className="col-md-6">
+					<img src={`https://codingapple1.github.io/shop/shoes${product.id + 1}.jpg`} alt={"/"} width="100%"/>
+				</div>
+				<div className="col-md-6 mt-4">
+					<h4 className="pt-5">{product.title}</h4>
+					<p>{product.content}</p>
+					<p>{product.price}원</p>
+					<button className="btn btn-danger">주문하기</button>
+					<button className="btn btn-info" onClick={() => {
+						history.goBack();
+					}}>돌아가기
+					</button>
+				</div>
 			</div>
 		</div>
 	);

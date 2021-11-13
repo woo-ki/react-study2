@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from 'react';
+// import {useState} from 'react';
 import {Button, Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import data from './assets/data/data';
 import {Link, Route, Switch, useHistory} from 'react-router-dom';
@@ -7,7 +7,8 @@ import Detail from './components/Detail';
 
 function App() {
 	const history = useHistory();
-	const [shoes, setShoes] = useState(data);
+	// const [shoes, setShoes] = useState(data);
+	const shoes = data;
 
 	return (
 		<div className="App">
@@ -17,8 +18,8 @@ function App() {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
-							<Nav.Link><Link to={"/"}>Home</Link></Nav.Link>
-							<Nav.Link><Link to={"/detail"}>Detail</Link></Nav.Link>
+							<Nav.Link as={Link} to={"/"}>Home</Nav.Link>
+							<Nav.Link as={Link} to={"/detail"}>Detail</Nav.Link>
 							<NavDropdown title="Dropdown" id="basic-nav-dropdown">
 								<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -62,7 +63,7 @@ function App() {
 	function Product(props) {
 	return (
 		<div className="col-md-4" onClick={() => {props.history.push(`detail/${props.product.id}`)}}>
-			<img src={`https://codingapple1.github.io/shop/shoes${props.product.id + 1}.jpg`} width={"100%"}/>
+			<img src={`https://codingapple1.github.io/shop/shoes${props.product.id + 1}.jpg`} alt={"/"} width={"100%"}/>
 			<h4>{props.product.title}</h4>
 			<p>{props.product.content} &amp; {props.product.price}</p>
 		</div>
