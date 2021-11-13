@@ -1,4 +1,14 @@
 import {useHistory, useParams} from 'react-router-dom';
+import styled from 'styled-components';
+
+const Box = styled.div`
+	padding : 20px;
+`;
+
+const Title = styled.h4`
+	font-size : 25px;
+	color : ${props => props.color}; 
+`;
 
 const Detail = (props) => {
 
@@ -7,6 +17,9 @@ const Detail = (props) => {
 
 	return (
 		<div className="container">
+			<Box>
+				<Title color={"red"}>상세페이지</Title>
+			</Box>
 			<div className="row">
 				{
 					props.shoes.map((x) => {
