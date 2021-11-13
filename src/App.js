@@ -1,8 +1,9 @@
 import './App.css';
-import {useState} from "react";
-import {Button, Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {useState} from 'react';
+import {Button, Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import data from './assets/data/data';
 import {Link, Route, Switch} from 'react-router-dom';
+import Detail from './components/Detail';
 
 function App() {
 	const [shoes, setShoes] = useState(data);
@@ -11,12 +12,12 @@ function App() {
 		<div className="App">
 			<Navbar bg="light" expand="lg">
 				<Container>
-					<Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+					<Navbar.Brand href="#home">ReactStudy</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
-							<Nav.Link href="#home">Home</Nav.Link>
-							<Nav.Link href="#link">Link</Nav.Link>
+							<Nav.Link><Link to={"/"}>Home</Link></Nav.Link>
+							<Nav.Link><Link to={"/detail"}>Detail</Link></Nav.Link>
 							<NavDropdown title="Dropdown" id="basic-nav-dropdown">
 								<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
 								<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -29,42 +30,32 @@ function App() {
 				</Container>
 			</Navbar>
 
-			<Route exact={true} path={"/"}>
-				<div className="jumbotron background">
-					<h1>20% Season Off</h1>
-					<p>이거시야 이거시야~</p>
-					<p>
-						<Button variant={"primary"}>Learn more</Button>
-					</p>
-				</div>
-				<div className="container">
-					<div className="row">
-						{
-							shoes.map((x, i) => {
-								return (
-									<Product product={x} key={i} />
-								)
-							})
-						}
+			<Switch>
+				<Route exact={true} path={"/"}>
+					<div className="jumbotron background">
+						<h1>20% Season Off</h1>
+						<p>이거시야 이거시야~</p>
+						<p>
+							<Button variant={"primary"}>Learn more</Button>
+						</p>
 					</div>
-				</div>
-			</Route>
-			<Route path={"/detail"}>
-				<div className="container">
-					<div className="row">
-						<div className="col-md-6">
-							<img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-						</div>
-						<div className="col-md-6 mt-4">
-							<h4 className="pt-5">상품명</h4>
-							<p>상품설명</p>
-							<p>120000원</p>
-							<button className="btn btn-danger">주문하기</button>
+					<div className="container">
+						<div className="row">
+							{
+								shoes.map((x, i) => {
+									return (
+										<Product product={x} key={i} />
+									)
+								})
+							}
 						</div>
 					</div>
-				</div>
-			</Route>
-			{/*<Route path={"/test"} component={Modal}></Route>*/}
+				</Route>
+				<Route path={"/detail"} component={Detail} />
+				<Route path={"/:id"}>
+					<div>아무거나아무거나!</div>
+				</Route>
+			</Switch>
 
 		</div>
 	);
