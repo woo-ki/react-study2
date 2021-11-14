@@ -9,6 +9,7 @@ import axios from 'axios';
 function App() {
 	const history = useHistory();
 	const [shoes, setShoes] = useState(data);
+	const [stock, setStock] = useState([10, 11, 12]);
 
 	return (
 		<div className="App">
@@ -62,7 +63,7 @@ function App() {
 							});
 					}}>더보기</button>
 				</Route>
-				<Route path={"/detail/:id"} render={() => <Detail shoes={shoes} />} />
+				<Route path={"/detail/:id"} render={() => <Detail shoes={shoes} stock={stock} setStock={setStock} />} />
 			</Switch>
 
 		</div>

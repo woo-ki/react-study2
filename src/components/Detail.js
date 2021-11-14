@@ -58,7 +58,12 @@ const Detail = (props) => {
 					<h4 className="pt-5">{product.title}</h4>
 					<p>{product.content}</p>
 					<p>{product.price}원</p>
-					<button className="btn btn-danger">주문하기</button>
+					<StockInfo stock={props.stock} id={id} />
+					<button className="btn btn-danger" onClick={() => {
+						const temp = [...props.stock];
+						temp[id] -= 1;
+						props.setStock(temp);
+					}}>주문하기</button>
 					<button className="btn btn-info" onClick={() => {
 						history.goBack();
 					}}>돌아가기
@@ -68,5 +73,11 @@ const Detail = (props) => {
 		</div>
 	);
 };
+
+function StockInfo(props) {
+	return (
+		<p>재고 : {props.stock[props.id]}</p>
+	)
+}
 
 export default Detail;
