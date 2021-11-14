@@ -1,14 +1,14 @@
 import './App.css';
-// import {useState} from 'react';
+import {useState} from 'react';
 import {Button, Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import data from './assets/data/data';
 import {Link, Route, Switch, useHistory} from 'react-router-dom';
 import Detail from './components/Detail';
+import axios from 'axios';
 
 function App() {
 	const history = useHistory();
-	// const [shoes, setShoes] = useState(data);
-	const shoes = data;
+	const [shoes, setShoes] = useState(data);
 
 	return (
 		<div className="App">
@@ -52,6 +52,15 @@ function App() {
 							}
 						</div>
 					</div>
+					<button className="btn btn-primary" onClick={() => {
+						axios.get('https://codingapple1.github.io/shop/data2.json')
+							.then((result) => {
+								setShoes([...shoes, ...result.data]);
+							})
+							.catch((error) => {
+								console.log(error);
+							});
+					}}>더보기</button>
 				</Route>
 				<Route path={"/detail/:id"} render={() => <Detail shoes={shoes} />} />
 			</Switch>
