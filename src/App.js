@@ -1,10 +1,12 @@
 import './App.css';
-import {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import data from './assets/data/data';
 import {Link, Route, Switch, useHistory} from 'react-router-dom';
 import Detail from './components/Detail';
 import axios from 'axios';
+
+const StockContext = React.createContext();
 
 function App() {
 	const history = useHistory();
@@ -42,17 +44,19 @@ function App() {
 							<Button variant={"primary"}>Learn more</Button>
 						</p>
 					</div>
-					<div className="container">
-						<div className="row">
-							{
-								shoes.map((x, i) => {
-									return (
-										<Product product={x} history={history} key={i} />
-									)
-								})
-							}
+					<StockContext.Provider value={stock}>
+						<div className="container">
+							<div className="row">
+								{
+									shoes.map((x, i) => {
+										return (
+											<Product product={x} history={history} key={i} />
+										)
+									})
+								}
+							</div>
 						</div>
-					</div>
+					</StockContext.Provider>
 					<button className="btn btn-primary" onClick={() => {
 						axios.get('https://codingapple1.github.io/shop/data2.json')
 							.then((result) => {
@@ -70,14 +74,22 @@ function App() {
 	);
 }
 
-	function Product(props) {
+function Product(props) {
 	return (
 		<div className="col-md-4" onClick={() => {props.history.push(`detail/${props.product.id}`)}}>
 			<img src={`https://codingapple1.github.io/shop/shoes${props.product.id + 1}.jpg`} alt={"/"} width={"100%"}/>
 			<h4>{props.product.title}</h4>
 			<p>{props.product.content} &amp; {props.product.price}</p>
+			<Test idx={props.product.id} />
 		</div>
 	);
+}
+
+function Test(props) {
+	const stock = useContext(StockContext);
+	return (
+		<p>재고 : {stock[props.idx]}</p>
+	)
 }
 
 export default App;
