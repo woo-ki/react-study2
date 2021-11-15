@@ -1,7 +1,9 @@
 import {useHistory, useParams} from 'react-router-dom';
 import styled from 'styled-components';
 import '../assets/css/detail.scss';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import {Nav} from 'react-bootstrap';
+import {CSSTransition} from 'react-transition-group';
 
 const Box = styled.div`
 	padding : 20px;
@@ -35,6 +37,9 @@ const Detail = (props) => {
 	const history = useHistory();
 	const {id} = useParams();
 	const product = props.shoes.find((x) => Number(x.id) === Number(id));
+	const [tabIdx, setTabIdx] = useState(0);
+	const [animationSwitch, setAnimationSwitch] = useState(false);
+	const nodeRef = useRef(null);
 
 	return (
 		<div className="container">
@@ -70,11 +75,43 @@ const Detail = (props) => {
 					</button>
 				</div>
 			</div>
+
+			<Nav className={"mt-5"} variant="tabs" defaultActiveKey="link-0">
+				<Nav.Item>
+					<Nav.Link eventKey="link-0" onClick={() => {setTabIdx(0); setAnimationSwitch(false);}}>Active1</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link eventKey="link-1" onClick={() => {setTabIdx(1); setAnimationSwitch(false);}}>Active2</Nav.Link>
+				</Nav.Item>
+				<Nav.Item>
+					<Nav.Link eventKey="link-2" onClick={() => {setTabIdx(2); setAnimationSwitch(false);}}>Active3</Nav.Link>
+				</Nav.Item>
+			</Nav>
+
+			<CSSTransition nodeRef={nodeRef} in={animationSwitch} classNames={"animation"} timeout={500}>
+				<div ref={nodeRef}>
+					<TabContent tabIdx={tabIdx} setAnimationSwitch={setAnimationSwitch} />
+				</div>
+			</CSSTransition>
 		</div>
 	);
 };
 
-function StockInfo(props) {
+const TabContent = (props) => {
+	const setAnimationSwitch = props.setAnimationSwitch;
+	useEffect(() => {
+		setAnimationSwitch(true);
+	});
+	if(props.tabIdx === 0) {
+		return <div>000</div>
+	} else if(props.tabIdx === 1) {
+		return <div>111</div>
+	} else if(props.tabIdx === 2) {
+		return <div>222</div>
+	}
+}
+
+const StockInfo = (props) => {
 	return (
 		<p>재고 : {props.stock[props.id]}</p>
 	)

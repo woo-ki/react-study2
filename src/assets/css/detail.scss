@@ -26,6 +26,15 @@ $main_color: #ff0000;
     background: #ffe591;
 }
 
+.animation-enter {
+    opacity: 0;
+}
+
+.animation-enter-active {
+    opacity: 1;
+    transition: all 0.5s;
+}
+
 //div.container h4 {
 //    color: blue;
 //}
