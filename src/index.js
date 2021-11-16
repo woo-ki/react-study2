@@ -5,11 +5,37 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import {BrowserRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+const store = createStore(() => {
+	const cart = [
+		{
+			id: 0,
+			name: '멋진신발',
+			quantity: 2
+		},
+		{
+			id: 1,
+			name: '슬픈신발',
+			quantity: 6
+		},
+		{
+			id: 2,
+			name: '기쁜신발',
+			quantity: 5
+		},
+	]
+	return {
+		cart: cart
+	}
+});
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter basename="/react-web">
-			<App/>
+			<Provider store={store}>
+				<App/>
+			</Provider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')

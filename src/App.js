@@ -3,8 +3,9 @@ import React, {useContext, useState} from 'react';
 import {Button, Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import data from './assets/data/data';
 import {Link, Route, Switch, useHistory} from 'react-router-dom';
-import Detail from './components/Detail';
 import axios from 'axios';
+import Detail from './components/Detail';
+import Cart from './components/Cart';
 
 const StockContext = React.createContext();
 
@@ -68,6 +69,9 @@ function App() {
 					}}>더보기</button>
 				</Route>
 				<Route path={"/detail/:id"} render={() => <Detail shoes={shoes} stock={stock} setStock={setStock} />} />
+				<Route path={"/cart"}>
+					<Cart/>
+				</Route>
 			</Switch>
 
 		</div>
