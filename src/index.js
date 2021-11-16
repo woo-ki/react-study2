@@ -3,32 +3,27 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-const store = createStore(() => {
-	const cart = [
-		{
-			id: 0,
-			name: '멋진신발',
-			quantity: 2
-		},
-		{
-			id: 1,
-			name: '슬픈신발',
-			quantity: 6
-		},
-		{
-			id: 2,
-			name: '기쁜신발',
-			quantity: 5
-		},
-	]
-	return {
-		cart: cart
+import cartData from './assets/data/cartData';
+
+const basicState = {
+	cart: cartData
+};
+
+const reducer = (state = basicState, action) => {
+	const modState = {...state};
+
+	if(action.type === 'increase') {
+		modState.cart[action.idx].quantity++;
+	} else if(action.type === 'decrease' && modState.cart[action.idx].quantity > 1) {
+		modState.cart[action.idx].quantity--;
 	}
-});
+	return modState;
+};
+
+const store = createStore(reducer);
 
 ReactDOM.render(
 	<React.StrictMode>

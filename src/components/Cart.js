@@ -15,13 +15,16 @@ const Cart = (props) => {
 				</thead>
 				<tbody>
 					{
-						props.products.map((x, i) => {
+						props.state.cart.map((x, i) => {
 							return (
 								<tr key={i}>
 									<td>{x.id}</td>
 									<td>{x.name}</td>
 									<td>{x.quantity}</td>
-									<td>@mdo</td>
+									<td>
+										<button onClick={() => {props.dispatch({type: 'increase', idx: i})}} style={{marginRight: "5px", width: "38px"}}>+</button>
+										<button onClick={() => {props.dispatch({type: 'decrease', idx: i})}} style={{width: "38px"}}>-</button>
+									</td>
 								</tr>
 							)
 						})
@@ -34,7 +37,7 @@ const Cart = (props) => {
 
 const getProps = (state) => {
 	return {
-		products: state.cart
+		state
 	}
 }
 
