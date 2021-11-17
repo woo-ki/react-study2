@@ -5,25 +5,31 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import {combineReducers, createStore} from 'redux';
 import cartData from './assets/data/cartData';
 
-const basicState = {
-	cart: cartData
-};
+const alertDefault = true;
 
-const reducer = (state = basicState, action) => {
-	const modState = {...state};
+const reducer2 = (state = alertDefault, action) => {
+	let modState = alertDefault;
+	if(action.type === 'closeAlert') {
+		modState = false;
+	}
+	return modState;
+}
+
+const reducer = (state = cartData, action) => {
+	const modState = [...state];
 
 	if(action.type === 'increase') {
-		modState.cart[action.idx].quantity++;
-	} else if(action.type === 'decrease' && modState.cart[action.idx].quantity > 1) {
-		modState.cart[action.idx].quantity--;
+		modState[action.idx].quantity++;
+	} else if(action.type === 'decrease' && modState[action.idx].quantity > 1) {
+		modState[action.idx].quantity--;
 	}
 	return modState;
 };
 
-const store = createStore(reducer);
+const store = createStore(combineReducers({reducer, reducer2}));
 
 ReactDOM.render(
 	<React.StrictMode>

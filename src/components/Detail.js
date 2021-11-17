@@ -49,7 +49,7 @@ const Detail = (props) => {
 			{
 				alertIsOpened
 					? (
-						<div className={"my_alert2"} id={"my-alert"}>
+						<div className={"my-alert2"} id={"my_alert"}>
 							<p>재고가 얼마 남지 않았습니다!</p>
 						</div>
 					)

@@ -13,7 +13,7 @@ $main_color: #ff0000;
     margin: auto;
 }
 
-.my_alert {
+.my-alert {
     @include fn();
 
     p {
@@ -21,8 +21,8 @@ $main_color: #ff0000;
     }
 }
 
-.my_alert2 {
-    @extend .my_alert;
+.my-alert2 {
+    @extend .my-alert;
     background: #ffe591;
 }
 

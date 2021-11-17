@@ -15,7 +15,7 @@ const Cart = (props) => {
 				</thead>
 				<tbody>
 					{
-						props.state.cart.map((x, i) => {
+						props.cart.map((x, i) => {
 							return (
 								<tr key={i}>
 									<td>{x.id}</td>
@@ -31,13 +31,25 @@ const Cart = (props) => {
 					}
 				</tbody>
 			</Table>
+
+			{
+				props.alertIsOpened
+					? (
+						<div className={"my-alert2"}>
+							<p>지금 구매하면 할인 20%</p>
+							<button onClick={() => {props.dispatch({type: 'closeAlert'})}}>닫기</button>
+						</div>
+					)
+					: null
+			}
 		</div>
 	);
 };
 
 const getProps = (state) => {
 	return {
-		state
+		cart: state.reducer,
+		alertIsOpened: state.reducer2
 	}
 }
 
