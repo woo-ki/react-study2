@@ -1,7 +1,15 @@
 import {Table} from 'react-bootstrap';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+// import {connect} from 'react-redux';
 
-const Cart = (props) => {
+const Cart = () => {
+
+	const state = useSelector(state => state);
+	const cart = state.reducer;
+	const alertIsOpened = state.reducer2;
+
+	const dispatch = useDispatch();
+
 	return (
 		<div>
 			<Table striped bordered hover variant="dark">
@@ -15,15 +23,15 @@ const Cart = (props) => {
 				</thead>
 				<tbody>
 					{
-						props.cart.map((x, i) => {
+						cart.map((x, i) => {
 							return (
 								<tr key={i}>
 									<td>{x.id}</td>
 									<td>{x.name}</td>
 									<td>{x.quantity}</td>
 									<td>
-										<button onClick={() => {props.dispatch({type: 'increase', idx: i})}} style={{marginRight: "5px", width: "38px"}}>+</button>
-										<button onClick={() => {props.dispatch({type: 'decrease', idx: i})}} style={{width: "38px"}}>-</button>
+										<button onClick={() => {dispatch({type: 'increase', idx: i})}} style={{marginRight: "5px", width: "38px"}}>+</button>
+										<button onClick={() => {dispatch({type: 'decrease', idx: i})}} style={{width: "38px"}}>-</button>
 									</td>
 								</tr>
 							)
@@ -33,11 +41,11 @@ const Cart = (props) => {
 			</Table>
 
 			{
-				props.alertIsOpened
+				alertIsOpened
 					? (
 						<div className={"my-alert2"}>
 							<p>지금 구매하면 할인 20%</p>
-							<button onClick={() => {props.dispatch({type: 'closeAlert'})}}>닫기</button>
+							<button onClick={() => {dispatch({type: 'closeAlert'})}}>닫기</button>
 						</div>
 					)
 					: null
@@ -46,12 +54,12 @@ const Cart = (props) => {
 	);
 };
 
-const getProps = (state) => {
-	return {
-		cart: state.reducer,
-		alertIsOpened: state.reducer2
-	}
-}
-
-export default connect(getProps)(Cart)
-// export default Cart
+// const getProps = (state) => {
+// 	return {
+// 		cart: state.reducer,
+// 		alertIsOpened: state.reducer2
+// 	}
+// }
+//
+// export default connect(getProps)(Cart)
+export default Cart
