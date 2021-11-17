@@ -11,21 +11,40 @@ import cartData from './assets/data/cartData';
 const alertDefault = true;
 
 const reducer2 = (state = alertDefault, action) => {
-	let modState = alertDefault;
+	let modState = state;
 	if(action.type === 'closeAlert') {
 		modState = false;
 	}
+
 	return modState;
 }
 
 const reducer = (state = cartData, action) => {
 	const modState = [...state];
-
-	if(action.type === 'increase') {
-		modState[action.idx].quantity++;
-	} else if(action.type === 'decrease' && modState[action.idx].quantity > 1) {
-		modState[action.idx].quantity--;
+	switch(action.type) {
+		case 'increase':
+			modState[action.idx].quantity++;
+			break;
+		case 'decrease':
+			if(modState[action.idx].quantity > 1) {
+				modState[action.idx].quantity--;
+			}
+			break;
+		case 'addCart':
+			const data = action.payload;
+			const idx = modState.findIndex((x) => {
+				return x.id === data.id && x.name === data.name;
+			});
+			if(idx !== -1) {
+				modState[idx].quantity++;
+			} else {
+				modState.push(action.payload);
+			}
+			break;
+		default :
+			break;
 	}
+
 	return modState;
 };
 

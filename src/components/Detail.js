@@ -4,6 +4,7 @@ import '../assets/css/detail.scss';
 import {useEffect, useRef, useState} from 'react';
 import {Nav} from 'react-bootstrap';
 import {CSSTransition} from 'react-transition-group';
+import {connect} from "react-redux";
 
 const Box = styled.div`
 	padding : 20px;
@@ -65,6 +66,14 @@ const Detail = (props) => {
 					<p>{product.price}원</p>
 					<StockInfo stock={props.stock} id={id} />
 					<button className="btn btn-danger" onClick={() => {
+						const data = {
+							id: product.id,
+							name: product.title,
+							quantity: 1
+						};
+						props.dispatch({type: 'addCart', payload: data});
+					}}>카트담기</button>
+					<button className="btn btn-danger" onClick={() => {
 						const temp = [...props.stock];
 						temp[id] -= 1;
 						props.setStock(temp);
@@ -117,4 +126,10 @@ const StockInfo = (props) => {
 	)
 }
 
-export default Detail;
+const getProps = (state) => {
+	return {
+		cart: state.reducer
+	}
+}
+
+export default connect(getProps)(Detail);
