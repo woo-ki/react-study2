@@ -42,6 +42,17 @@ const Detail = (props) => {
 	const [animationSwitch, setAnimationSwitch] = useState(false);
 	const nodeRef = useRef(null);
 
+	// 최근 본 상품목록 로컬스토리지 관리
+	useEffect(() => {
+		const arr = localStorage.getItem('recently') === null ? new Array(id) : JSON.parse(localStorage.getItem('recently'));
+		if(arr.includes(id)) {
+			arr.splice(arr.indexOf(id), 1);
+		}
+		arr.push(id);
+		localStorage.setItem('recently', JSON.stringify(arr));
+	}, [id]);
+
+
 	return (
 		<div className="container">
 			<Box>
