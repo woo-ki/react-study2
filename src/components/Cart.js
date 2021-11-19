@@ -1,5 +1,6 @@
 import {Table} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, memo} from 'react';
 // import {connect} from 'react-redux';
 
 const Cart = () => {
@@ -50,9 +51,33 @@ const Cart = () => {
 					)
 					: null
 			}
+			<Parent name={"wooki"} age={29} />
 		</div>
 	);
 };
+
+const Parent = (props) => {
+	return (
+		<div>
+			<Child1 name={props.name}/>
+			<Child2 age={props.age}/>
+		</div>
+	)
+}
+
+const Child1 = memo((props) => {
+	useEffect(() => {console.log('렌더링1')});
+	return (
+		<div>{props.name}</div>
+	)
+});
+
+const Child2 = memo((props) => {
+	useEffect(() => {console.log('렌더링2')});
+	return (
+		<div>{props.age}</div>
+	)
+});
 
 // const getProps = (state) => {
 // 	return {
